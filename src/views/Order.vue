@@ -1,6 +1,6 @@
 <template>
-	<div class="box order">
-		<div class="inner">
+	<div class="box order start-preloader">
+		<div class="inner fade-top">
 			<div>
 				<div class="head"><span>Плюшевые мишки от производителя</span></div>
 
@@ -8,24 +8,24 @@
 					<h1>Выберите способ доставки</h1>
 					<ul class="links-list">
 						<li>
-							<router-link :to="'/checkout/Новая почта/' + this.$route.params.title + '/' + this.$route.params.category ">
+							<a @click.prevent="next" :href="'/checkout/Новая почта/' + this.$route.params.title + '/' + this.$route.params.category ">
 								<span>Новая почта</span>
-							</router-link>
+							</a>
 						</li>
 						<li>
-							<router-link :to="'/checkout/Курьерская доставка/' + this.$route.params.title + '/' + this.$route.params.category ">
+							<a @click.prevent="next" :href="'/checkout/Курьерская доставка/' + this.$route.params.title + '/' + this.$route.params.category ">
 								<span>Курьерская доставка</span>
-							</router-link>
+							</a>
 						</li>
 						<li>
-							<router-link :to="'/checkout/Justin/' + this.$route.params.title + '/' + this.$route.params.category">
+							<a @click.prevent="next" :href="'/checkout/Justin/' + this.$route.params.title + '/' + this.$route.params.category">
 								<span>Justin</span>
-							</router-link>
+							</a>
 						</li>
 						<li>
-							<router-link :to="'/checkout/Укрпочта/' + this.$route.params.title + '/' + this.$route.params.category ">
+							<a @click.prevent="next" :href="'/checkout/Укрпочта/' + this.$route.params.title + '/' + this.$route.params.category ">
 								<span>Укрпочта</span>
-							</router-link>
+							</a>
 						</li>
 					</ul>
 				</div>	
@@ -53,6 +53,21 @@
 		</div>		
 	</div>
 </template>
+
+<script>
+	export default {
+		methods: {
+            next(e) {
+                let href = e.target.closest('a').getAttribute('href');
+                document.body.classList.add('preloader');
+                
+                setTimeout(() => {
+                    this.$router.push(href);
+                }, 500);
+            }
+        }
+	}
+</script>
 
 <style lang="scss">
 	.order .inner {
@@ -171,11 +186,3 @@
 		}
 	}
 </style>
-
-<script>
-	export default {
-		mounted() {
-			console.log(this.$route.params);
-		}
-	}
-</script>

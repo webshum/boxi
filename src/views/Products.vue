@@ -1,6 +1,6 @@
 <template>
-	<div class="box products">
-		<div class="inner">
+	<div class="box products start-preloader">
+		<div class="inner fade-top">
 			<div class="head"><span>Плюшевые мишки от производителя</span></div>
 
 			<div class="body">
@@ -8,12 +8,12 @@
 
 				<div class="cards">
 					<div class="card-item" v-for="product of products" :key="product.id">
-						<router-link :to="'/order/' + product.id + '/' + product.title + '/' + product.category ">
+						<a @click.prevent="next" :href="/order/ + product.id + '/' + product.title + '/' + product.category ">
 			                <div class="image">
 			                    <img :src=" require('../assets/img/' + product.image) " alt="">
 			                </div>
 			                <div class="name">{{ product.title }}</div>
-			            </router-link>      
+			            </a>      
 					</div>
 				</div>
 			</div>	
@@ -34,6 +34,16 @@
 		components: {
 			SliderProducts
 		},
+		methods: {
+            next(e) {
+                let href = e.target.closest('a').getAttribute('href');
+                document.body.classList.add('preloader');
+                
+                setTimeout(() => {
+                    this.$router.push(href);
+                }, 500);
+            }
+        },
 		data: () => ({
 			productList: [
 				[

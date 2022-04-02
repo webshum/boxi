@@ -1,6 +1,6 @@
 <template>
-	<div class="box">
-		<div class="inner">
+	<div class="box start-preloader">
+		<div class="inner fade-top">
 			<div class="head"><span>Плюшевые мишки от производителя</span></div>
 
 			<div class="body">
@@ -9,12 +9,12 @@
 				<div class="swiper">
 					<div class="swiper-wrapper">
 						<div class="swiper-slide card-item" v-for="category of categories" :key="category.id">
-							<router-link :to="'/products/' + category.id">
+							<a @click.prevent="next" :href="/products/ + category.id">
 				                <div class="image">
 				                    <img :src=" require('../assets/img/' + category.image) " alt="">
 				                </div>
 				                <div class="name">{{ category.title }}</div>
-				            </router-link> 
+				            </a> 
 						</div>
 					</div>
 
@@ -39,7 +39,6 @@
 
   	export default {
   		mounted() {
-
   			Swiper.use([Navigation]);
 
   			const swiper = new Swiper('.swiper', {
@@ -63,6 +62,16 @@
 				}
   			});
   		},
+  		methods: {
+            next(e) {
+                let href = e.target.closest('a').getAttribute('href');
+                document.body.classList.add('preloader');
+
+                setTimeout(() => {
+                    this.$router.push(href);
+                }, 500);
+            }
+        },
   		data: () => ({
   			categories: [
   				{

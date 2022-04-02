@@ -1,14 +1,14 @@
 <template>
-    <div class="home">
-        <div class="content">
+    <div class="home start-preloader">
+        <div class="content fade-right">
             <div>
                 <h1>Мягкие мишки от производителя</h1>
                 <p>Лучшее качество всего от 280 грн</p>
 
-                <router-link to="/categories" class="btn">
+                <a @click.prevent="next" href="/categories" class="btn">
                     <svg viewBox="0 0 24 24" class="mdi-icon"><path d="M20,12C20,16.42 16.42,20 12,20C7.58,20 4,16.42 4,12C4,7.58 7.58,4 12,4C12.76,4 13.5,4.11 14.2,4.31L15.77,2.74C14.61,2.26 13.34,2 12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z" stroke-width="0" fill-rule="nonzero"></path></svg>
                     <span>Подобрать Мишку</span>
-                </router-link>
+                </a>
             </div>            
         </div>
     </div>
@@ -16,7 +16,17 @@
 
 <script>
     export default {
-        name: 'Home'
+        name: 'Home',
+        methods: {
+            next(e) {
+                let href = e.target.closest('a').href;
+                document.body.classList.add('preloader');
+
+                setTimeout(() => {
+                    this.$router.push(href);
+                }, 500);
+            }
+        }
     }
 </script>
 
